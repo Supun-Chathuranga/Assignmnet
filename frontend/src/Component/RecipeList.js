@@ -1,11 +1,10 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 
 const RecipeList = () => {
   const [recipes, setRecipes] = useState([]);
-  const navigate = useNavigate();
 
   // get all recipes from the database
   useEffect(() => {
@@ -36,11 +35,6 @@ const RecipeList = () => {
     }
   }
 
-  // navigate to recipe details page
-  const navigateToRecipeDetails = (id) => {
-    navigate(`/recipe/${id}`);
-  }
-
   return (
     <div className="table-responsive">
       <table className="table table-striped">
@@ -54,11 +48,12 @@ const RecipeList = () => {
         </thead>
         <tbody>
           {recipes.map((recipe) => (
-            <tr key={recipe._id} onClick={() => navigateToRecipeDetails(recipe._id)} style={{ cursor: 'pointer' }}>
+            <tr key={recipe._id}>
               <td>{recipe.Recipe_Name}</td>
               <td>{recipe.Ingrediants}</td>
               <td>{recipe.Description}</td>
               <td>
+                <Link to={`/recipe/${recipe._id}`} className="btn btn-primary">Details</Link>
                 <button className="btn btn-danger" onClick={(event) => handleRecipeDelete(recipe._id, event)}>Delete</button>
                 <Link to={`/edit/${recipe._id}`} className="btn btn-primary">Edit</Link>
               </td>

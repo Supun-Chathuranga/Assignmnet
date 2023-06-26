@@ -1,46 +1,26 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
 const RecipeEdit = () => {
   const { id } = useParams();
-  const [recipe, setRecipe] = useState({
-    name: '',
-    ingredients: '',
-    description: '',
-  });
+  const [recipe, setRecipe] = useState({});
 
-  useEffect(() => {
-    axios.get(`http://localhost:8000/update/${id}`)
-      .then(response => {
-        setRecipe(response.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }, [id]);
+  const handleSubmit=(event)=>{
+    event.preventDefault();
+  
+    axios.put(`http://localhost:8000/update/${id}`,recipe,{
+    }).then((response)=>{
+      alert(response.data);
+    }).catch((error)=>{
+      console.log(error)
+    });
+   
+  }
 
-  const handleChange = e => {
-    const { name, value } = e.target;
-    setRecipe(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
+  const handleOnChange = (e) => {
+    setRecipe({ ...recipe, [e.target.name]: e.target.value });
   };
-
-  const handleSubmit = e => {
-    e.preventDefault();
-    axios.put(`/api/recipes/${id}`, recipe)
-      .then(response => {
-        console.log(response.data);
-        navigate('/');
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  };
-
-  const navigate = useNavigate();
 
   return (
     <div>
@@ -48,15 +28,15 @@ const RecipeEdit = () => {
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label htmlFor="name" className="form-label">Recipe Name</label>
-          <input type="text" className="form-control" id="name" name="name" value={recipe.name} onChange={handleChange} required />
+          <input type="text" className="form-control" id="name" name="Recipe_Name"  onChange={handleOnChange} required />
         </div>
         <div className="mb-3">
           <label htmlFor="ingredients" className="form-label">Ingredients</label>
-          <input type="text" className="form-control" id="ingredients" name="ingredients" value={recipe.ingredients} onChange={handleChange} required />
+          <input type="text" className="form-control" id="ingredients" name="Ingrediants"  onChange={handleOnChange} required />
         </div>
         <div className="mb-3">
           <label htmlFor="description" className="form-label">Description</label>
-          <textarea className="form-control" id="description" name="description" value={recipe.description} onChange={handleChange} required></textarea>
+          <textarea className="form-control" id="description" name="Description"  onChange={handleOnChange} required></textarea>
         </div>
         <button type="submit" className="btn btn-primary">Save Changes</button>
       </form>
