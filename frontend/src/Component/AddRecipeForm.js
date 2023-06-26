@@ -4,11 +4,12 @@ import axios from 'axios';
 const AddRecipeForm = () => {
   const [newRecipe, setNewRecipe] = useState({});
 
+  // Update the newRecipe state when input values change
   const handleOnChange = (e) => {
     setNewRecipe({ ...newRecipe, [e.target.name]: e.target.value });
   };
 
-  // handle submit recipe data
+  // Handle the form submission
   const handleSubmit = (e) => {
     e.preventDefault();
     axios.post('http://localhost:8000/add', newRecipe)
@@ -21,7 +22,7 @@ const AddRecipeForm = () => {
       });
   };
 
-  // reset the form inputs
+  // Reset the form inputs
   const resetForm = () => {
     setNewRecipe({});
   };

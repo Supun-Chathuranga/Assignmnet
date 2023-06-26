@@ -10,13 +10,16 @@ const RecipeEdit = () => {
     Description: ''
   });
 
+  // Function to handle form submission
   const handleSubmit = (event) => {
     event.preventDefault();
 
+    // Send a PUT request to update the recipe with the given ID
     axios
       .put(`http://localhost:8000/update/${id}`, recipe)
       .then((response) => {
         alert(response.data);
+        // Clear the form fields after successful update
         setRecipe({
           Recipe_Name: '',
           Ingrediants: '',
@@ -28,7 +31,9 @@ const RecipeEdit = () => {
       });
   };
 
+  // Function to handle input changes
   const handleOnChange = (e) => {
+    // Update the corresponding field in the recipe state
     setRecipe({ ...recipe, [e.target.name]: e.target.value });
   };
 
@@ -86,4 +91,3 @@ const RecipeEdit = () => {
 };
 
 export default RecipeEdit;
-

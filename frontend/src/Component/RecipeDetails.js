@@ -6,6 +6,7 @@ const RecipeDetails = () => {
   const { id } = useParams();
   const [recipe, setRecipe] = useState(null);
 
+  // Fetch the recipe details based on the ID parameter
   useEffect(() => {
     axios.get(`http://localhost:8000/find/${id}`)
       .then((response) => {
@@ -16,6 +17,7 @@ const RecipeDetails = () => {
       });
   }, [id]);
 
+  // Display a message if the recipe is not found
   if (!recipe) {
     return <div>Recipe not found</div>;
   }
