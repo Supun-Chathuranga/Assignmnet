@@ -1,5 +1,6 @@
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './Component/Home'
 import Navbar from './Component/Navbar';
 import RecipeList from './Component/RecipeList';
 import AddRecipeForm from './Component/AddRecipeForm';
@@ -16,6 +17,10 @@ const App = () => {
         <Navbar />
         <div className="mt-4">
           <Routes>
+          <Route
+              path="/"
+              element={<Home/>}
+            />
             <Route
               path="/"
               element={<RecipeList/>}

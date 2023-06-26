@@ -22,7 +22,6 @@ function NavbarComponent() {
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="me-auto">
           <Nav.Link as={Link} to="/">Home</Nav.Link>
-          <Nav.Link as={Link} to="/add">Add Recipe</Nav.Link>
           <Button variant='primary' onClick={handleRefresh}>Refresh Page</Button>
           
         </Nav>
