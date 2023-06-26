@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { useState, useEffect } from 'react';
 
 const RecipeList = () => {
   const [recipes, setRecipes] = useState([]);
@@ -11,9 +10,10 @@ const RecipeList = () => {
     axios.get("http://localhost:8000")
       .then((response) => {
         setRecipes(response.data);
-      }).catch((err) => {
-        console.log("Can not get data ", err);
       })
+      .catch((error) => {
+        console.log("Cannot get data", error);
+      });
   }, []);
 
   // delete selected recipe
@@ -49,13 +49,18 @@ const RecipeList = () => {
         <tbody>
           {recipes.map((recipe) => (
             <tr key={recipe._id}>
-              <td>{recipe.Recipe_Name}</td>
+              <td>
+                <Link to={`/recipe/${recipe._id}`} style={{ textDecoration: 'none' }}>
+                  {recipe.Recipe_Name}
+                </Link>
+              </td>
               <td>{recipe.Ingrediants}</td>
               <td>{recipe.Description}</td>
               <td>
-                <Link to={`/recipe/${recipe._id}`} className="btn btn-primary">Details</Link>
-                <button className="btn btn-danger" onClick={(event) => handleRecipeDelete(recipe._id, event)}>Delete</button>
-                <Link to={`/edit/${recipe._id}`} className="btn btn-primary">Edit</Link>
+                <div className="d-flex">
+                  <button className="btn btn-danger me-2" onClick={(event) => handleRecipeDelete(recipe._id, event)}>Delete</button>
+                  <Link to={`/edit/${recipe._id}`} className="btn btn-primary">Edit</Link>
+                </div>
               </td>
             </tr>
           ))}
